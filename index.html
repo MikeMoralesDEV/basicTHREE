@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My eLearning App</title>
+		<style>
+			body { margin: 0;  overflow: hidden;}
+			canvas { width: 100%; height: 100% }
+
+	</style>
+	</head>
+	<body>
+	<!-- Modal content -->
+		
+		<script src="js/build/three.js"></script>
+		<script src="js/src/cameras/CubeCamera.js"></script>
+		<script src="js/basicThree.js"></script>
+		<script src="js/examples/js/renderers/CanvasRenderer.js"></script>
+		<script src="js/examples/js/renderers/Projector.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/src/core/Clock.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+		<script>
+
+   		var explicacion = [
+   			{
+   			"head": "Head variable",
+   			"body": "Body variable",
+   			"foot": "Foot variable"
+   			},
+
+   		];
+
+   		var quiz = [
+        {
+            "question" : "Q1: Who came up with the theory of relativity?",
+            "image" : "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg/220px-Albert_Einstein_Head.jpg",
+            "choices" : [
+                                    "Sir Isaac Newton",
+                                    "Nicolaus Copernicus",
+                                    "Albert Einstein",
+                                    "Ralph Waldo Emmerson"
+                                ],
+            "correct" : "Albert Einstein",
+            "explanation" : "Albert Einstein drafted the special theory of relativity in 1905.",
+        },
+        {
+            "question" : "Q2: Who is on the two dollar bill?",
+            "image" : "http://upload.wikimedia.org/wikipedia/commons/thumb/9/94/US_%242_obverse-high.jpg/320px-US_%242_obverse-high.jpg",
+            "choices" : [
+                                    "Thomas Jefferson",
+                                    "Dwight D. Eisenhower",
+                                    "Benjamin Franklin",
+                                    "Abraham Lincoln"
+                                ],
+            "correct" : "Thomas Jefferson",
+            "explanation" : "The two dollar bill is seldom seen in circulation. As a result, some businesses are confused when presented with the note.",
+        },
+        {
+            "question" : "Q3: What event began on April 12, 1861?",
+            "image" : "",
+            "choices" : [
+                                    "First manned flight",
+                                    "California became a state",
+                                    "American Civil War began",
+                                    "Declaration of Independence"
+                                ],
+            "correct" : "American Civil War began",
+            "explanation" : "South Carolina came under attack when Confederate soldiers attacked Fort Sumter. The war lasted until April 9th 1865.",
+        },
+
+
+	];
+
+	var dictado = [
+		{
+			"enunciado": "Escribe en el cuadro de texto lo que escuches. Dale al play cuando estes listo",
+			"correct": "Esto es lo que se escucha en el audio.",
+			"audio": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg"
+		},{},
+
+
+	];
+
+	var copiado = [
+		{
+			"enunciado": "Esto es un copiado y debes copiarlo.",
+			"correct": "Esto es un copiado y debes copiarlo.",
+		},{},
+
+
+	];
+
+	var question = [
+		{
+			"enunciado": "¿Qué animal es el de la imagen?",
+			"correct": "Burro",
+			"ref": "http://www.radio4g.com/sites/default/files/thumbnail.jpgwd89c7087"
+
+		},
+		{
+			"enunciado": "Escribe el nombre de esta libreria",
+			"correct": "basicTHREE",
+
+		},
+
+
+	];
+
+
+			var render = function () {
+				requestAnimationFrame( render );
+
+
+				basicTHREE.renderer.render(basicTHREE.scene, basicTHREE.camera);
+
+			};
+
+
+			basicTHREE.InitiateScene("PerspectiveCamera", "WebGL");
+
+			render();
+
+
+		</script>
+
+	</body>
+</html>
