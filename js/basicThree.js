@@ -313,8 +313,10 @@ basicTHREE.addElement = function(geometry, material, x=0, z=5, collidable=0, fun
 
 //Getter
 basicTHREE.getElement = function(name){
-	
-	return basicTHREE.scene.getObjectByName(name);
+	if(typeof name == "string")
+		return basicTHREE.scene.getObjectByName(name);
+	else
+		return basicTHREE.scene.getObjectByID(name);
 
 };
 
