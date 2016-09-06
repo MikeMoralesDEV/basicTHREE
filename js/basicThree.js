@@ -67,7 +67,7 @@ var onlyCollidables = 0;
 //ELEARNING GLOBAL VARIABLES - MODULE 4
 basicTHREE.arrayFunctions= new Array();
 var idCount = 0;
-basicTHREE.explication= [];
+basicTHREE.explanation= [];
 basicTHREE.notes = ["fail.jpg", "good-job.png", "nicejob.gif", "perfect10.GIF"];
 var quiz=[];
 var initCount = 0;
@@ -83,9 +83,9 @@ var standbyID;
 basicTHREE.InitiateScene = function(cameraType, rendererType){
 	firstDelta=delta;
 	for(var i=0; i<10; i++) {
-	    basicTHREE.explication[i] = [];
+	    basicTHREE.explanation[i] = [];
 	    for(var j=0; j<3; j++) {
-	        basicTHREE.explication[i][j] = undefined;
+	        basicTHREE.explanation[i][j] = undefined;
 	    }
 	}
 
@@ -297,7 +297,7 @@ basicTHREE.addElement = function(geometry, material, x=0, z=5, collidable=0, fun
 		basicTHREE.arrayCollidables.push(mesh);
 		basicTHREE.arrayFunctions.push(funcion);
 	}
-	if(funcion==explicationPopup){
+	if(funcion==explanationPopup){
 		popupInit();
 	}
 	else if(funcion==quizTest){
@@ -314,10 +314,12 @@ basicTHREE.addElement = function(geometry, material, x=0, z=5, collidable=0, fun
 
 //Getter
 basicTHREE.getElement = function(name){
-	if(typeof name == "string")
+	if(typeof name == "string"){
 		return basicTHREE.scene.getObjectByName(name);
-	else
-		return basicTHREE.scene.getObjectByID(name);
+	}
+	else{
+		return basicTHREE.scene.getObjectById(name);
+	}
 
 };
 
@@ -362,7 +364,6 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
 
 };
 
-var num=0;
 basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset){
 	//1000 ha resultado el numero perfecto del contador para que las funciones se ejecuten solo una vez con cada colision
 	if(basicTHREE.testCount==1000){
@@ -383,7 +384,6 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 			//0.8 es la distancia que considero "de seguridad", para evitar que se atasque el elemento en otro. 
 			if ( collisionResults.length > 0 && collisionResults[0].distance-1 < directionVector.length() ){ 
 				stop = 0;
-				num++;
 				for( var i = 0; i < basicTHREE.arrayCollidables.length; i++){
 					if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]!=0 ){
 						basicTHREE.arrayFunctions[i](i);
@@ -400,11 +400,14 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
                 case KEYUP:
 
                 	if(cond==1 && stop){
+
                     	MovingMesh.translateZ( -moveDistance*10 );
+
                 	}
                     else if(cond==1 && !stop){
+
                     	MovingMesh.translateZ( moveDistance*10 );
-                    			stop = 1;
+                    	stop = 1;
 
                     }
                     break;
@@ -414,30 +417,30 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 	                    MovingMesh.translateZ( moveDistance*10 );
 	                else if(cond==1 && !stop){
                     	MovingMesh.translateZ( -moveDistance*10 );
-					stop = 1;
-
+						stop = 1;
 	                }
                     break;
                     
                 case KEYLEFT:
 
-                   	if(cond==1 && stop) 
-                    	MovingMesh.translateX( -moveDistance*10 );
-                    else if(cond==1 && !stop){
+                   	if(cond==1 && stop) {
+       					MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
+                    	MovingMesh.translateZ( -moveDistance*10 );
+                    }else if(cond==1 && !stop){
                     	MovingMesh.translateX( moveDistance*10);
-					stop = 1;
-
+						stop = 1;
                     }
                     break;
                     
                 case KEYRIGHT:
 
-                    if(cond==1 && stop)
-	                    MovingMesh.translateX( moveDistance*10 );
+                    if(cond==1 && stop){
+                        MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);
+	                    MovingMesh.translateZ( -moveDistance*10 );
+                    }
 	                else if(cond==1 && !stop){
                     	MovingMesh.translateX( -moveDistance*10 );
 						stop = 1;
-
 	                }
                     break;
                     
@@ -520,10 +523,10 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 };
 
 //POPUP EXPLICACIONES
-	callbackExplication = function(){
-			basicTHREE.explication[idCount][0] = document.getElementsByClassName('personal-header')[0].innerHTML;
-			basicTHREE.explication[idCount][1] = document.getElementsByClassName('personal-body')[0].innerHTML;;
-			basicTHREE.explication[idCount][2] = document.getElementsByClassName('personal-footer')[0].innerHTML;;
+	callbackExplanation = function(){
+			basicTHREE.explanation[idCount][0] = document.getElementsByClassName('personal-header')[0].innerHTML;
+			basicTHREE.explanation[idCount][1] = document.getElementsByClassName('personal-body')[0].innerHTML;;
+			basicTHREE.explanation[idCount][2] = document.getElementsByClassName('personal-footer')[0].innerHTML;;
 			idCount++;
 			document.getElementsByClassName('aux')[0].remove();
 
@@ -531,11 +534,11 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 
 
 
-	basicTHREE.setExplication = function(textHead, textBody, textFoot){
+	basicTHREE.setExplanation = function(textHead, textBody, textFoot){
 		if(arguments.length==1 && ((typeof textHead)=="object")){ //Este seria el caso en el que el unico argumento es un var como indica el manual de usuario
-			basicTHREE.explication[idCount][0]=textHead[0]['head'];
-			basicTHREE.explication[idCount][1]=textHead[0]['body'];
-			basicTHREE.explication[idCount][2]=textHead[0]['foot'];
+			basicTHREE.explanation[idCount][0]=textHead[0]['head'];
+			basicTHREE.explanation[idCount][1]=textHead[0]['body'];
+			basicTHREE.explanation[idCount][2]=textHead[0]['foot'];
 			idCount++;
 		}else if(arguments.length==1 && (textHead.substring(textHead.length-5,textHead.length)==".html")){ 	//Este seria el caso de que solo hay un parametro y este parametro es un fichero de texto
 			var url = textHead;
@@ -544,11 +547,11 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 			$.get(url, function(data){
 					$(".aux").append(data);
 			});
-			setTimeout(callbackExplication, 1);
+			setTimeout(callbackExplanation, 1);
 		}else{
-			basicTHREE.explication[idCount][0]=textHead;
-			basicTHREE.explication[idCount][1]=textBody;
-			basicTHREE.explication[idCount][2]=textFoot;
+			basicTHREE.explanation[idCount][0]=textHead;
+			basicTHREE.explanation[idCount][1]=textBody;
+			basicTHREE.explanation[idCount][2]=textFoot;
 			idCount++;
 
 		}
@@ -557,7 +560,7 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 	}
 
 
-	explicationPopup = function(id){
+	explanationPopup = function(id){
 
 						var modal = document.getElementById('myModal');
 						id = id-onlyCollidables;
@@ -565,21 +568,21 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 						span.onclick = function() {
 		    				modal.style.display = "none";
 		    			}
-		    			if(document.getElementsByClassName('head-text')[0].innerHTML!=basicTHREE.explication[id][0]){
+		    			if(document.getElementsByClassName('head-text')[0].innerHTML!=basicTHREE.explanation[id][0]){
 		    				document.getElementsByClassName('head-text')[0].remove();
-		    				$(".modal-header").append("<h2 class=\"head-text\">"+basicTHREE.explication[id][0]+"</h2>");
+		    				$(".modal-header").append("<h2 class=\"head-text\">"+basicTHREE.explanation[id][0]+"</h2>");
 
 		    			}
 
-		    			if(document.getElementsByClassName('body-text')[0].innerHTML!=basicTHREE.explication[id][1]){
+		    			if(document.getElementsByClassName('body-text')[0].innerHTML!=basicTHREE.explanation[id][1]){
 							document.getElementsByClassName('body-text')[0].remove();
-		    				$(".modal-body").append("<p class=\"body-text\">"+basicTHREE.explication[id][1]+"</p>");
+		    				$(".modal-body").append("<p class=\"body-text\">"+basicTHREE.explanation[id][1]+"</p>");
 
 		    			}
 
-		    			if(document.getElementsByClassName('foot-text')[0].innerHTML!=basicTHREE.explication[id][2]){
+		    			if(document.getElementsByClassName('foot-text')[0].innerHTML!=basicTHREE.explanation[id][2]){
 							document.getElementsByClassName('foot-text')[0].remove();
-		    				$(".modal-footer").append("<h3 class=\"foot-text\">"+basicTHREE.explication[id][2]+"</h3>");
+		    				$(".modal-footer").append("<h3 class=\"foot-text\">"+basicTHREE.explanation[id][2]+"</h3>");
 
 		    			}
 		    			modal.style.display = "block";
@@ -593,13 +596,13 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 								$("body").append(data);
 
 							if(document.getElementsByClassName('head-text')[0]==null)
-								$(".modal-header").append("<h2 class=\"head-text\">"+basicTHREE.explication[0][0]+"</h2>");
+								$(".modal-header").append("<h2 class=\"head-text\">"+basicTHREE.explanation[0][0]+"</h2>");
 
 							if(document.getElementsByClassName('body-text')[0]==null)
-								$(".modal-body").append("<p class=\"body-text\">"+basicTHREE.explication[0][1]+"</p>");
+								$(".modal-body").append("<p class=\"body-text\">"+basicTHREE.explanation[0][1]+"</p>");
 
 							if(document.getElementsByClassName('foot-text')[0]==null)
-								$(".modal-footer").append("<h3 class=\"foot-text\">"+basicTHREE.explication[0][2]+"</h3>");
+								$(".modal-footer").append("<h3 class=\"foot-text\">"+basicTHREE.explanation[0][2]+"</h3>");
 
 						});
 
