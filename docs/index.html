@@ -13,7 +13,7 @@
 	<body>
 	<!-- Modal content -->
 		
-		<script src="js/three.js"></script>
+		<script src="js/build/three.js"></script>
 		<script src="js/cameras/CubeCamera.js"></script>
 		<script src="js/basicThree.js"></script>
 		<script src="js/examples/js/renderers/CanvasRenderer.js"></script>
@@ -24,7 +24,7 @@
 
 		<script>
 		//Lo que dice la esfera
-   		var explication = [
+   		var explanation = [
    			{
    			"head": "Hola! Soy esfera!",
    			"body": "No tengo nada que ofrecerte, pero Don Cubo te estaba buscando!",
@@ -83,9 +83,9 @@
 
     		//Creo y añado la esfera interaccionable
     		var sphere = new THREE.SphereGeometry(1, 15, 15);
-    		basicTHREE.addElement(sphere, basicTHREE.colorfulMaterial(), 28, 28, 1, explicationPopup);
+    		basicTHREE.addElement(sphere, basicTHREE.colorfulMaterial(), 28, 28, 1, explanationPopup);
     			//Configuro la aplicación
-    			basicTHREE.setExplication(explication);
+    			basicTHREE.setExplanation(explanation);
 
     		//Creo y añado el cubo interaccionable
     		var materialCube = new basicTHREE.shinyMaterial(colorYellow);
