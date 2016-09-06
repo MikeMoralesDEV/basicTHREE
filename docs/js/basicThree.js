@@ -38,7 +38,7 @@ basicTHREE.count;
 //MOVEMENT GLOBAL VARIABLES - MODULE 2
 clock = new THREE.Clock();
 delta = clock.getDelta();
-const moveDistance = 200 * delta; // 200 pixels per second
+moveDistance = 200 * delta; // 200 pixels per second
 rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
 basicTHREE.Avatar;
 const KEYUP             = 38;        // up key
@@ -56,6 +56,7 @@ const KEYZ 				= 90;		//z key
 const KEYX 				= 88;		//z key
 basicTHREE.resetPos;
 basicTHREE.resetRot;
+var firstDelta;
 
 //COLLISION GLOBAL VARIABLES - MODULE 3
 basicTHREE.arrayCollidables=[];
@@ -80,6 +81,7 @@ var standbyID;
 
 
 basicTHREE.InitiateScene = function(cameraType, rendererType){
+	firstDelta=delta;
 	for(var i=0; i<10; i++) {
 	    basicTHREE.explication[i] = [];
 	    for(var j=0; j<3; j++) {
@@ -287,7 +289,6 @@ basicTHREE.loadMesh = function(urlLink, name, x=0, z=5, collidable=0, funcion=0)
 
 //Adder
 basicTHREE.addElement = function(geometry, material, x=0, z=5, collidable=0, funcion=0){
-
 	var mesh = new THREE.Mesh( geometry, material );
 	var box = new THREE.Box3().setFromObject(mesh);
 	mesh.position.set(x, -215+box.max.y, z);
@@ -333,9 +334,10 @@ basicTHREE.createCameraControls = function(){
 
 };
 
+var fired=0;
+
 //Movimiento y colision
 basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
-	
 	if(basicTHREE.resetPos==undefined){
 		basicTHREE.Avatar = MovingMesh; 
 		basicTHREE.Avatar.add(basicTHREE.camera);
@@ -346,25 +348,73 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
 	
  		document.addEventListener('keydown', function(e)
         {
+			if(!fired && delta!=0){
+				fired=1;
             var key = e.keyCode;
-            basicTHREE.testCollidable()
-            switch( key )
+            basicTHREE.testCollidable(key, MovingMesh, cond, glob, rotate, reset);
+
+           
+            }
+        });
+
+            fired=0;
+
+
+};
+
+var num=0;
+basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset){
+	//1000 ha resultado el numero perfecto del contador para que las funciones se ejecuten solo una vez con cada colision
+	if(basicTHREE.testCount==1000){
+		basicTHREE.testCount=0;
+		stop = 1;
+		delta = firstDelta;
+
+	}
+	var originPoint = basicTHREE.Avatar.position.clone(); //este valor varia, para la colisión
+	for (var vertexIndex = 0; vertexIndex < basicTHREE.Avatar.geometry.vertices.length; vertexIndex++)
+	{		
+			var localVertex = basicTHREE.Avatar.geometry.vertices[vertexIndex].clone();
+			var globalVertex = localVertex.applyMatrix4( basicTHREE.Avatar.matrix );
+			var directionVector = globalVertex.sub( basicTHREE.Avatar.position );
+
+			var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+			var collisionResults = ray.intersectObjects( basicTHREE.arrayCollidables );
+			//0.8 es la distancia que considero "de seguridad", para evitar que se atasque el elemento en otro. 
+			if ( collisionResults.length > 0 && collisionResults[0].distance-1 < directionVector.length() ){ 
+				stop = 0;
+				num++;
+				for( var i = 0; i < basicTHREE.arrayCollidables.length; i++){
+					if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]!=0 ){
+						basicTHREE.arrayFunctions[i](i);
+						basicTHREE.testCount=1;
+					}
+				}
+			}
+	}
+
+		 switch( key )
             {
 
             	//Movimiento condicionado
                 case KEYUP:
-                	if(cond==1 && stop)
-                    	MovingMesh.translateZ( -moveDistance/2 );
+
+                	if(cond==1 && stop){
+                    	MovingMesh.translateZ( -moveDistance*10 );
+                	}
                     else if(cond==1 && !stop){
-                    	MovingMesh.translateZ( moveDistance/2 );
+                    	MovingMesh.translateZ( moveDistance*10 );
+                    			stop = 1;
+
                     }
                     break;
                     
                 case KEYDOWN:
                    	if(cond==1 && stop)
-	                    MovingMesh.translateZ( moveDistance/2 );
+	                    MovingMesh.translateZ( moveDistance*10 );
 	                else if(cond==1 && !stop){
-                    	MovingMesh.translateZ( -moveDistance/2 );
+                    	MovingMesh.translateZ( -moveDistance*10 );
+					stop = 1;
 
 	                }
                     break;
@@ -372,9 +422,10 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
                 case KEYLEFT:
 
                    	if(cond==1 && stop) 
-                    	MovingMesh.translateX( -moveDistance/2 );
+                    	MovingMesh.translateX( -moveDistance*10 );
                     else if(cond==1 && !stop){
-                    	MovingMesh.translateX( moveDistance/2 );
+                    	MovingMesh.translateX( moveDistance*10);
+					stop = 1;
 
                     }
                     break;
@@ -382,9 +433,10 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
                 case KEYRIGHT:
 
                     if(cond==1 && stop)
-	                    MovingMesh.translateX( moveDistance/2 );
+	                    MovingMesh.translateX( moveDistance*10 );
 	                else if(cond==1 && !stop){
-                    	MovingMesh.translateX( -moveDistance/2 );
+                    	MovingMesh.translateX( -moveDistance*10 );
+						stop = 1;
 
 	                }
                     break;
@@ -393,8 +445,10 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
                 case KEYW:
                 	if(glob==1 && stop)
                    		MovingMesh.translateZ( -moveDistance );
-                   	else if(glob==1 && !stop)
+                   	else if(glob==1 && !stop){
                     	MovingMesh.translateZ( moveDistance );
+               			stop = 1;
+                   	}
                     break;
                     
                 case KEYS:
@@ -451,39 +505,7 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
  					}
 					break;                   
             }
-            
-        });
-
-
-
-};
-
-basicTHREE.testCollidable = function(){
-	//1000 ha resultado el numero perfecto del contador para que las funciones se ejecuten solo una vez con cada colision
-	if(basicTHREE.testCount==1000){
-		basicTHREE.testCount=0;
-		stop = 1;
-	}
-	var originPoint = basicTHREE.Avatar.position.clone(); //este valor varia, para la colisión
-	for (var vertexIndex = 0; vertexIndex < basicTHREE.Avatar.geometry.vertices.length; vertexIndex++)
-	{		
-			var localVertex = basicTHREE.Avatar.geometry.vertices[vertexIndex].clone();
-			var globalVertex = localVertex.applyMatrix4( basicTHREE.Avatar.matrix );
-			var directionVector = globalVertex.sub( basicTHREE.Avatar.position );
-
-			var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-			var collisionResults = ray.intersectObjects( basicTHREE.arrayCollidables );
-			//0.8 es la distancia que considero "de seguridad", para evitar que se atasque el elemento en otro. 
-			if ( collisionResults.length > 0 && collisionResults[0].distance-1 < directionVector.length() ){ 
-				stop = 0;
-				for( var i = 0; i < basicTHREE.arrayCollidables.length; i++){
-					if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]!=0 && basicTHREE.testCount==0){
-						basicTHREE.arrayFunctions[i](i);
-						basicTHREE.testCount=1;
-					}
-				}
-			}
-	}
+	
 	basicTHREE.testCount++;
 
 };
