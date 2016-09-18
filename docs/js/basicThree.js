@@ -368,7 +368,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 	//1000 ha resultado el numero perfecto del contador para que las funciones se ejecuten solo una vez con cada colision
 	if(basicTHREE.testCount==1000){
 		basicTHREE.testCount=0;
-		stop = 1;
+		//stop = 1;
 		delta = firstDelta;
 
 	}
@@ -385,10 +385,26 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 			if ( collisionResults.length > 0 && collisionResults[0].distance-1 < directionVector.length() ){ 
 				stop = 0;
 				for( var i = 0; i < basicTHREE.arrayCollidables.length; i++){
-					if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]!=0 ){
+
+					if(key==KEYUP && !stop) MovingMesh.translateZ( moveDistance*10 );
+					else if(key==KEYDOWN && !stop) MovingMesh.translateZ( -moveDistance*10 );
+					else if(key==KEYLEFT && !stop) MovingMesh.translateX( moveDistance*10);
+					else if(key==KEYRIGHT && !stop) MovingMesh.translateX( -moveDistance*10 );
+					else if(key==KEYW && !stop) MovingMesh.translateZ( moveDistance );
+					else if(key==KEYS && !stop) MovingMesh.translateZ( -moveDistance );
+					else if(key==KEYA && !stop) MovingMesh.translateX( moveDistance );
+					else if(key==KEYD && !stop) MovingMesh.translateX( -moveDistance );
+					if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]!=0 ){ // Es objeto e-Learning
 						basicTHREE.arrayFunctions[i](i);
-						basicTHREE.testCount=1;
+						basicTHREE.testCount++;
+						console.log(basicTHREE.testCount);
+
+					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
+
+						stop=1;
+
 					}
+
 				}
 			}
 	}
@@ -399,80 +415,54 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
             	//Movimiento condicionado
                 case KEYUP:
 
-                	if(cond==1 && stop){
+                	if(cond==1 && stop)
+                    	MovingMesh.translateZ( -moveDistance*50 );
+                	
 
-                    	MovingMesh.translateZ( -moveDistance*10 );
-
-                	}
-                    else if(cond==1 && !stop){
-
-                    	MovingMesh.translateZ( moveDistance*10 );
-                    	stop = 1;
-
-                    }
                     break;
                     
                 case KEYDOWN:
                    	if(cond==1 && stop)
-	                    MovingMesh.translateZ( moveDistance*10 );
-	                else if(cond==1 && !stop){
-                    	MovingMesh.translateZ( -moveDistance*10 );
-						stop = 1;
-	                }
+	                    MovingMesh.translateZ( moveDistance*50 );
                     break;
                     
                 case KEYLEFT:
 
                    	if(cond==1 && stop) {
+
        					MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
-                    	MovingMesh.translateZ( -moveDistance*10 );
-                    }else if(cond==1 && !stop){
-                    	MovingMesh.translateX( moveDistance*10);
-						stop = 1;
-                    }
+                    	MovingMesh.translateZ( -moveDistance*50 );
+ 					}
                     break;
                     
                 case KEYRIGHT:
 
                     if(cond==1 && stop){
                         MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);
-	                    MovingMesh.translateZ( -moveDistance*10 );
+	                    MovingMesh.translateZ( -moveDistance*50 );
                     }
-	                else if(cond==1 && !stop){
-                    	MovingMesh.translateX( -moveDistance*10 );
-						stop = 1;
-	                }
                     break;
                     
                     //Movimiento global
                 case KEYW:
                 	if(glob==1 && stop)
                    		MovingMesh.translateZ( -moveDistance );
-                   	else if(glob==1 && !stop){
-                    	MovingMesh.translateZ( moveDistance );
-               			stop = 1;
-                   	}
                     break;
                     
                 case KEYS:
                 	if(glob==1 && stop)                  
                     	MovingMesh.translateZ( moveDistance );
-                    else if(glob==1 && !stop)
-                    	MovingMesh.translateZ( -moveDistance );
+
                     break;
                     
                 case KEYA:
                 	if(glob==1 && stop)              
                     	MovingMesh.translateX( -moveDistance );
-                    else if(glob==1 && !stop)
-                    	MovingMesh.translateX( moveDistance );
                     break;
                     
                 case KEYD:
                 	if(glob==1 && stop)                
                     	MovingMesh.translateX( moveDistance );
-                    else if(glob==1 && !stop)
-                    	MovingMesh.translateX( -moveDistance );
                     break;
 
 					//Giros
@@ -567,6 +557,7 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 						var span = document.getElementsByClassName("close")[0];
 						span.onclick = function() {
 		    				modal.style.display = "none";
+		    				stop = 1;
 		    			}
 		    			if(document.getElementsByClassName('head-text')[0].innerHTML!=basicTHREE.explanation[id][0]){
 		    				document.getElementsByClassName('head-text')[0].remove();
@@ -692,11 +683,12 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 		endQ.onclick = function(){
 			frame.style.display = "none";
 			frame.remove();
+			stop = 1;
 		}
 		frame.style.display = "block";
 		endQ.style.display = "block";
 		if(document.getElementById('question-block')==null){
-			$("#question").append("<h1 id=\"title-question\">QUESTION</h1><br><br><div id=\"question-block\"><div id=\"questionText\"></div><br></div><div id=\"Message\"></div><div id=\"incorrectMessage\"></div>");
+			$("#question").append("<h1 id=\"title-question\">PREGUNTAS</h1><br><br><div id=\"question-block\"><div id=\"questionText\"></div><br></div><div id=\"Message\"></div><div id=\"incorrectMessage\"></div>");
 			if(question[id][currentQ]['ref']!="" && question[id][currentQ]['ref']!=undefined )
 				$('#questionText').append("<img style=\"max-height: 500px; max-width: 500px;\" src=\""+ question[id][currentQ]['ref'] +"\"><br>")
 			$("#questionText").append(question[id][currentQ]["enunciado"]);
@@ -770,6 +762,7 @@ basicTHREE.setNotes = function(suspenso, aprobado, notable, perfecto){
 		         	$('#question-block').append("<center><img height=\"200px\" width=\"200px\" margin-left=\"40%\" src=\""+ basicTHREE.notes[3] +"\"></center>");
 		         }
 	     }
+	     stop = 1;
 	};
 
 //COPIADO EXERCISE
@@ -830,6 +823,7 @@ dictadoTest = function(id){
 
 			frame.style.display = "none";
 			frame.remove();
+			stop = 1;
 		}
 		frame.style.display = "block";
 		end.style.display = "block";
@@ -857,7 +851,7 @@ dictadoTest = function(id){
 	         $('#explanation').empty();
 	         $('#questionQ').empty();
 	         $('#questionQ').append(quiz[id][currentquestion]['question']);
-	         $('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + longitud);
+	         $('#pager').text('Pregunta ' + Number(currentquestion + 1) + ' de ' + longitud);
 	         if (quiz[id][currentquestion].hasOwnProperty('image') && quiz[id][currentquestion]['image'] != "") {
 	             if ($('#question-image').length == 0) {
 	                 $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[id][currentquestion]['image']).attr('alt', htmlEncode(quiz[id][currentquestion]['question'])).insertAfter('#question');
@@ -967,6 +961,7 @@ dictadoTest = function(id){
 	         else if(result == 100){
 	            $("#imgId").attr("src","http://i2.photobucket.com/albums/y41/blackwelsh13/Smileys/perfect10.gif");
 	         }
+	         stop = 1;
 	     }
 
 	     function init() {
@@ -976,14 +971,14 @@ dictadoTest = function(id){
 	         if (typeof quiztitle !== "undefined" && $.type(quiztitle) === "string") {
 	             $(document.createElement('h1')).text(quiztitle).appendTo('#frame');
 	         } else {
-	             $(document.createElement('h1')).text("Quiz").appendTo('#frame');
+	             $(document.createElement('h1')).text("Tipo Test").appendTo('#frame');
 	         }
 	         for(var i = 0; quiz[id][i]!=undefined; i++)
 	         	longitud++;
 			 //add pager and questions
 	         if (typeof quiz[id] !== "undefined") {
 	             //add pager
-	             $(document.createElement('p')).addClass('pager').attr('id', 'pager').text('Question 1 of ' + longitud).appendTo('#frame');
+	             $(document.createElement('p')).addClass('pager').attr('id', 'pager').text('Pregunta 1 de ' + longitud).appendTo('#frame');
 	             //add first question
 	             $("#frame").append("<h2 id=\"questionQ\">"+ quiz[id][0]['question'] +"</h2>")
 
