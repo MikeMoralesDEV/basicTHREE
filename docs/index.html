@@ -22,17 +22,6 @@
 		<script src="js/src/core/Clock.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<!-- load fonts -->
-<script src="js/fonts/gentilis_bold.typeface.js"></script>
-<script src="js/fonts/gentilis_regular.typeface.js"></script>
-<script src="js/fonts/optimer_bold.typeface.js"></script>
-<script src="js/fonts/optimer_regular.typeface.js"></script>
-<script src="js/fonts/helvetiker_bold.typeface.js"></script>
-<script src="js/fonts/helvetiker_regular.typeface.js"></script>
-<script src="js/fonts/droid_sans_regular.typeface.js"></script>
-<script src="js/fonts/droid_sans_bold.typeface.js"></script>
-<script src="js/fonts/droid_serif_regular.typeface.js"></script>
-<script src="js/fonts/droid_serif_bold.typeface.js"></script>
 		<script>
 		//Lo que dice la esfera
    		var explanation = [
@@ -145,28 +134,32 @@
     		
     		//texto
     			// add 3D text
-	var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-	var materialSide = new THREE.MeshBasicMaterial( { color: 0x000088 } );
-	var materialArray = [ materialFront, materialSide ];
-	var textGeom = new THREE.TextGeometry( "Hello, World!", 
-	{
-		size: 30, height: 4, curveSegments: 3,
-		font: "helvetiker", weight: "bold", style: "normal",
-		bevelThickness: 1, bevelSize: 2, bevelEnabled: true,
-		material: 0, extrudeMaterial: 1
-	});
-	// font: helvetiker, gentilis, droid sans, droid serif, optimer
-	// weight: normal, bold
-	
-	var textMaterial = new THREE.MeshFaceMaterial(materialArray);
-	var textMesh = new THREE.Mesh(textGeom, textMaterial );
-	
-	textGeom.computeBoundingBox();
-	var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
-	
-	textMesh.position.set( -0.5 * textWidth, 50, 100 );
-	textMesh.rotation.x = -Math.PI / 4;
-	basicTHREE.scene.add(textMesh);
+var loader = new THREE.FontLoader();
+
+loader.load( 'fonts/helvetiker_bold.typeface.js', function ( font ) {
+
+    var textGeo = new THREE.TextGeometry( "My Text", {
+
+        font: font,
+
+        size: 200,
+        height: 50,
+        curveSegments: 12,
+
+        bevelThickness: 2,
+        bevelSize: 5,
+        bevelEnabled: true
+
+    } );
+
+    var textMaterial = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+
+    var mesh = new THREE.Mesh( textGeo, textMaterial );
+    mesh.position.set( x, y, z );
+
+    basicTHREE.scene.add( mesh );
+
+} );
     		
 			//Bucle de renderización
 			var render = function () {
