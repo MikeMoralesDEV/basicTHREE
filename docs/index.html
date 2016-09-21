@@ -150,7 +150,8 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
     var textMaterial = basicTHREE.colorfulMaterial();
      textGeo.computeBoundingBox();
 
-    basicTHREE.addElement(textGeo, textMaterial, 15, 15, 1, 0);
+    var texto = basicTHREE.addElement(textGeo, textMaterial, 30, 45, 1, 0);
+    texto.position.y = 50;
 } );
     		
 			//Bucle de renderización
