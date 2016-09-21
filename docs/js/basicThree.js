@@ -342,7 +342,7 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
 	if(basicTHREE.resetPos==undefined){
 		basicTHREE.Avatar = MovingMesh; 
 		basicTHREE.Avatar.add(basicTHREE.camera);
-		basicTHREE.camera.position.y =  Math.sin( 200 );  
+		basicTHREE.camera.position.y =  Math.sin( 180 );  
 		basicTHREE.resetPos=[MovingMesh.position.x, MovingMesh.position.y, MovingMesh.position.z]; //estos no varian para el reset.
 		basicTHREE.resetRot=[MovingMesh.rotation.x, MovingMesh.rotation.y, MovingMesh.rotation.z];
 	}
