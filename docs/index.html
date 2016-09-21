@@ -148,13 +148,12 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
     } );
 
     var textMaterial = basicTHREE.colorfulMaterial();
-    var texto = new THREE.Mesh(textGeo, textMaterial );
+    var texto = basicTHREE.addElement(textGeo, textMaterial, 30, -5, 0, 0);
     textGeo.computeBoundingBox();
     texto.position.y += 5;
-    texto.position.x = 30;
-    texto.position.z = -5;
 
-    basicTHREE.scene.add(texto);
+
+    
 
 } );
     		
