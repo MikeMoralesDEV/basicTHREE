@@ -165,10 +165,10 @@ basicTHREE.InitiateScene = function(cameraType, rendererType){
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	texture.repeat.set( 50, 50 );
 
-	groundBasic = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture } );
+	groundBasic = new THREE.MeshBasicMaterial( { color: 0x000000, map: texture } );
 	groundBasic.color.setHSL( 0.1, 0.9, 0.7 );
 
-	ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 50000, 50000 ), groundBasic );
+	ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 256, 256 ), groundBasic );
 	ground.position.y = - 215;
 	ground.rotation.x = - Math.PI / 2;
 	scene.add( ground );
