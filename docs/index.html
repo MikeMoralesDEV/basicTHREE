@@ -132,6 +132,30 @@
     		    //Configuro la aplicación
     		basicTHREE.setQuestion(question);
     		
+    		//texto
+    			// add 3D text
+	var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+	var materialSide = new THREE.MeshBasicMaterial( { color: 0x000088 } );
+	var materialArray = [ materialFront, materialSide ];
+	var textGeom = new THREE.TextGeometry( "Hello, World!", 
+	{
+		size: 30, height: 4, curveSegments: 3,
+		font: "helvetiker", weight: "bold", style: "normal",
+		bevelThickness: 1, bevelSize: 2, bevelEnabled: true,
+		material: 0, extrudeMaterial: 1
+	});
+	// font: helvetiker, gentilis, droid sans, droid serif, optimer
+	// weight: normal, bold
+	
+	var textMaterial = new THREE.MeshFaceMaterial(materialArray);
+	var textMesh = new THREE.Mesh(textGeom, textMaterial );
+	
+	textGeom.computeBoundingBox();
+	var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
+	
+	textMesh.position.set( -0.5 * textWidth, 50, 100 );
+	textMesh.rotation.x = -Math.PI / 4;
+	basicTHREE.scene.add(textMesh);
     		
 			//Bucle de renderización
 			var render = function () {
