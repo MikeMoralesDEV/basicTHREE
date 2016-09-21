@@ -161,7 +161,7 @@ basicTHREE.InitiateScene = function(cameraType, rendererType){
 
 	//Creacion de suelo y cielo
 		// Suelo
-	var texture = new THREE.TextureLoader().load( "js/desert.jpg" );
+	var texture = new THREE.TextureLoader().load( "js/checkerboard.jpg" );
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	texture.repeat.set( 50, 50 );
 
