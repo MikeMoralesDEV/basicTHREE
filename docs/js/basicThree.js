@@ -166,7 +166,7 @@ basicTHREE.InitiateScene = function(cameraType, rendererType){
 	texture.repeat.set( 50, 50 );
 
 	groundBasic = new THREE.MeshBasicMaterial( { color: 0x000000, map: texture } );
-	//groundBasic.color.setHSL( 0.1, 0.9, 0.7 );
+	groundBasic.color.setHSL( 0.1, 0.1, 0.1 );
 
 	ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 256, 256 ), groundBasic );
 	ground.position.y = - 215;
