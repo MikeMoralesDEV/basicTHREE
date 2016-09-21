@@ -331,7 +331,6 @@ basicTHREE.createCameraControls = function(){
 
 	var controls = new THREE.OrbitControls(basicTHREE.camera, basicTHREE.renderer.domElement);
 	controls.enableKeys = false; 
-	basicTHREE.camera.rotation.y = 90 * Math.PI / 180;
 	return controls;
 
 };
@@ -343,6 +342,7 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
 	if(basicTHREE.resetPos==undefined){
 		basicTHREE.Avatar = MovingMesh; 
 		basicTHREE.Avatar.add(basicTHREE.camera);
+		basicTHREE.camera.rotation.y = 90 * Math.PI / 180;
 		basicTHREE.resetPos=[MovingMesh.position.x, MovingMesh.position.y, MovingMesh.position.z]; //estos no varian para el reset.
 		basicTHREE.resetRot=[MovingMesh.rotation.x, MovingMesh.rotation.y, MovingMesh.rotation.z];
 	}
