@@ -131,6 +131,13 @@
     		basicTHREE.addElement(cube, materialCube, 16, 21, 1, questionPopup);
     		    //Configuro la aplicación
     		basicTHREE.setQuestion(question);
+    		
+    		//Texto de librería
+    		var texto = new THREE.TextGeometry( "BasicTHREE", {
+    			font: 'optimer',
+    			size: 70
+    		});
+    		basicTHREE.addElement(texto, basicTHREE.colorfulMaterial(), 15, 15, 1, 0);
 
 			//Bucle de renderización
 			var render = function () {
