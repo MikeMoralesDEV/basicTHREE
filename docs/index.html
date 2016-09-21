@@ -98,27 +98,7 @@
 
 			//Controles de cámara
 			controls = basicTHREE.createCameraControls();
-   		//texto
-    			// add 3D text
-var loader = new THREE.FontLoader();
 
-loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
-
-    var textGeo = new THREE.TextGeometry( "BasicTHREE", {
-		size: 2.5, height: 4, curveSegments: 10,
-		font: font, weight: "bold", style: "normal",
-		bevelThickness: 0.000005, bevelSize: 0.02, bevelEnabled: true,
-		material: 0, extrudeMaterial: 1
-
-
-    } );
-
-    var textMaterial = basicTHREE.colorfulMaterial();
-     textGeo.computeBoundingBox();
-
-    var texto = basicTHREE.addElement(textGeo, textMaterial, 30, -5, 1, 0);
-    texto.position.y += 5;
-} );
 
     		//Creo material y geometria para las paredes
 			var wall = new THREE.BoxGeometry( 0.5, 20, 50)
