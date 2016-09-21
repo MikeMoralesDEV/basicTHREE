@@ -331,7 +331,6 @@ basicTHREE.createCameraControls = function(){
 
 	var controls = new THREE.OrbitControls(basicTHREE.camera, basicTHREE.renderer.domElement);
 	controls.enableKeys = false; 
-	basicTHREE.camera.rotation.y = 90 * Math.PI / 180;
 	return controls;
 
 };
