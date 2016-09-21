@@ -141,12 +141,8 @@
             font = "optimer", // helvetiker, optimer, gentilis, droid sans, droid serif
             weight = "bold", // normal bold
             style = "normal"; // normal italic
-    		var texto = new THREE.TextGeometry( text, {
-    			font: font,
-    			size: size,
-    			height: height,
-    			weight: weight,
-    			
+    		var texto = new THREE.TextGeometry( "BasicTHREE", {
+    			size: 70,
     		});
     		basicTHREE.addElement(texto, basicTHREE.colorfulMaterial(), 15, 15, 1, 0);
 
