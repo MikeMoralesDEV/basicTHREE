@@ -133,9 +133,20 @@
     		basicTHREE.setQuestion(question);
     		
     		//Texto de librería
-    		var texto = new THREE.TextGeometry( "BasicTHREE", {
-    			font: 'optimer',
-    			size: 70
+    		  var text = "my text",
+
+            height = 20,
+            size = 70,
+
+            font = "optimer", // helvetiker, optimer, gentilis, droid sans, droid serif
+            weight = "bold", // normal bold
+            style = "normal"; // normal italic
+    		var texto = new THREE.TextGeometry( text, {
+    			font: font,
+    			size: size,
+    			height: height,
+    			weight: weight,
+    			
     		});
     		basicTHREE.addElement(texto, basicTHREE.colorfulMaterial(), 15, 15, 1, 0);
 
