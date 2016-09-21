@@ -139,18 +139,11 @@ var loader = new THREE.FontLoader();
 loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
 
     var textGeo = new THREE.TextGeometry( "BasicTHREE", {
+		size: 30, height: 4, curveSegments: 3,
+		font: font, weight: "bold", style: "normal",
+		bevelThickness: 1, bevelSize: 2, bevelEnabled: true,
+		material: 0, extrudeMaterial: 1
 
-        font: font,
-	weight: "bold",
-	style: "normal",
-	
-        size: 2.5,
-        height: 0.5,
-        curveSegments: 3,
-
-        bevelThickness: 5,
-        bevelSize: 0.2,
-        bevelEnabled: true
 
     } );
 
