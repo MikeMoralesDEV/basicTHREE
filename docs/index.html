@@ -152,7 +152,7 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
 
     } );
 
-    var textMaterial = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+    var textMaterial = basicTHREE.colorfulMaterial();
 
     basicTHREE.addElement(textGeo, textMaterial, 15, 15, 1, 0);
 } );
