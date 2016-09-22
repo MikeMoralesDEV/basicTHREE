@@ -130,12 +130,13 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
 			var materialWall = new basicTHREE.shinyMaterial(colorRed);
 
 			//Agrego paredes, pero hay que rotarlas para formar una habitación y también moverlas para que coincidan las esquinas. Lleva un rato de pruebas pero se hace
+			var wallMesh4 = basicTHREE.addElement(wall, materialWall, 40, -5, 1, 0);
+			wallMesh4.rotation.y = Math.PI/2;
 			var wallMesh1 = basicTHREE.addElement(wall, materialWall, 15, 20, 1, 0);
 			var wallMesh2 = basicTHREE.addElement(wall, materialWall, 40, 45, 1, 0);
 			wallMesh2.rotation.y = Math.PI/2;
 			var wallMesh3 = basicTHREE.addElement(wall, materialWall, 65, 20, 1, 0);
-			var wallMesh4 = basicTHREE.addElement(wall, materialWall, 40, -5, 1, 0);
-			wallMesh4.rotation.y = Math.PI/2;
+
 
 
 			//Creo y añado Avatar dentro de la habitación
