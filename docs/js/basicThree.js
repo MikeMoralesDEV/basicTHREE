@@ -400,7 +400,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 						console.log(basicTHREE.testCount);
 
 					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
-						console.log("CHOCO");
+						console.log(stop);
 						stop=1;
 
 					}
