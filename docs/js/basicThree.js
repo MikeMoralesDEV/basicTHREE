@@ -372,6 +372,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 		delta = firstDelta;
 
 	}
+	var colType = "ACT";
 	var originPoint = basicTHREE.Avatar.position.clone(); //este valor varia, para la colisión
 	for (var vertexIndex = 0; vertexIndex < basicTHREE.Avatar.geometry.vertices.length; vertexIndex++)
 	{		
@@ -400,7 +401,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 						console.log(basicTHREE.testCount);
 
 					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
-						stop=1;
+						colType = "WALL";
 
 					}
 
@@ -495,7 +496,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
  		}
 		break;                   
             }
-	
+	if(colType == "WALL") stop=1;
 	basicTHREE.testCount++;
 
 };
