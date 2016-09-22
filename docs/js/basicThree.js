@@ -413,13 +413,9 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 
             	//Movimiento condicionado
                 case KEYUP:
-
-                	if(cond==1 && stop){
+        		console.log(stop);
+                	if(cond==1 && stop)
                     		MovingMesh.translateZ( -moveDistance*50 );
-        			console.log(stop);
-
-                	}
-
                     break;
                     
                 case KEYDOWN:
