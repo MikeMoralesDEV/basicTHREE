@@ -115,7 +115,7 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
 
     var textMaterial = basicTHREE.colorfulMaterial();
     //var texto = basicTHREE.addElement(textGeo, textMaterial, 30, -5, 0, 0);
-    var texto = new Mesh(textGeo, textMaterial)
+    var texto = new Mesh(textGeo, textMaterial);
     textGeo.computeBoundingBox();
     texto.position.y += 5;
     texto.position.x = 30;
