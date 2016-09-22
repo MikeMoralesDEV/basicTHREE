@@ -400,7 +400,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 						console.log(basicTHREE.testCount);
 
 					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
-
+						console.log("CHOCO");
 						stop=1;
 
 					}
@@ -430,16 +430,16 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 
                    	if(cond==1 && stop) {
 
-       					MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
-                    	MovingMesh.translateZ( -moveDistance*50 );
- 					}
+       				MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
+                    		MovingMesh.translateZ( -moveDistance*50 );
+ 			}
                     break;
                     
                 case KEYRIGHT:
 
                     if(cond==1 && stop){
                         MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);
-	                    MovingMesh.translateZ( -moveDistance*50 );
+	                MovingMesh.translateZ( -moveDistance*50 );
                     }
                     break;
                     
@@ -451,52 +451,52 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
                     
                 case KEYS:
                 	if(glob==1 && stop)                  
-                    	MovingMesh.translateZ( moveDistance );
+                    		MovingMesh.translateZ( moveDistance );
 
                     break;
                     
                 case KEYA:
                 	if(glob==1 && stop)              
-                    	MovingMesh.translateX( -moveDistance );
+                    		MovingMesh.translateX( -moveDistance );
                     break;
                     
                 case KEYD:
                 	if(glob==1 && stop)                
-                    	MovingMesh.translateX( moveDistance );
+                    		MovingMesh.translateX( moveDistance );
                     break;
 
 					//Giros
                 case KEYQ:
                 	if(rotate==1 && stop)               
-						MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
-		            break;
+				MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
+		        break;
                     
                 case KEYE:
                 	if(rotate==1 && stop)
-						MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);                    
-					break;
+				MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);                    
+			break;
 
-				case KEYF:
-					if(rotate==1 && stop)
-						MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), 0.05);
-					break;
+		case KEYF:
+			if(rotate==1 && stop)
+				MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), 0.05);
+			break;
 
-				case KEYZ:
-					if(rotate==1 && stop)
-						MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), -0.05);
-					break;
+		case KEYZ:
+			if(rotate==1 && stop)
+				MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), -0.05);
+			break;
 
-					//Reinicio
- 				case KEYX:
- 					if(reset==1){
-	 					MovingMesh.position.x = basicTHREE.resetPos[0];
- 						MovingMesh.position.y = basicTHREE.resetPos[1];
- 						MovingMesh.position.z = basicTHREE.resetPos[2];
- 						MovingMesh.rotation.x = basicTHREE.resetRot[0];
- 						MovingMesh.rotation.y = basicTHREE.resetRot[1];
- 						MovingMesh.rotation.z = basicTHREE.resetRot[2];
- 					}
-					break;                   
+		//Reinicio
+ 		case KEYX:
+ 		if(reset==1){
+			MovingMesh.position.x = basicTHREE.resetPos[0];
+ 			MovingMesh.position.y = basicTHREE.resetPos[1];
+ 			MovingMesh.position.z = basicTHREE.resetPos[2];
+			MovingMesh.rotation.x = basicTHREE.resetRot[0];
+ 			MovingMesh.rotation.y = basicTHREE.resetRot[1];
+			MovingMesh.rotation.z = basicTHREE.resetRot[2];
+ 		}
+		break;                   
             }
 	
 	basicTHREE.testCount++;
