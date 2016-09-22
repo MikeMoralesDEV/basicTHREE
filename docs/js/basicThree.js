@@ -400,7 +400,6 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 						console.log(basicTHREE.testCount);
 
 					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
-						console.log(stop);
 						stop=1;
 
 					}
@@ -415,9 +414,11 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
             	//Movimiento condicionado
                 case KEYUP:
 
-                	if(cond==1 && stop)
-                    	MovingMesh.translateZ( -moveDistance*50 );
-                	
+                	if(cond==1 && stop){
+                    		MovingMesh.translateZ( -moveDistance*50 );
+        			console.log(stop);
+
+                	}
 
                     break;
                     
