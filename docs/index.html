@@ -127,7 +127,7 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
 
     		//Creo material y geometria para las paredes
 			var wall = new THREE.BoxGeometry( 0.5, 20, 50)
-			var materialWall = new basicTHREE.shadowMaterial(colorBlue);
+			var materialWall = new basicTHREE.shadedMaterial(colorBlue);
 
 			//Agrego paredes, pero hay que rotarlas para formar una habitación y también moverlas para que coincidan las esquinas. Lleva un rato de pruebas pero se hace
 			var wallMesh4 = basicTHREE.addElement(wall, materialWall, 40, -5, 1, 0);
