@@ -114,8 +114,7 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
     } );
 
     var textMaterial = basicTHREE.colorfulMaterial();
-    //var texto = basicTHREE.addElement(textGeo, textMaterial, 30, -5, 0, 0);
-    var texto = new Mesh(textGeo, textMaterial);
+    var texto = basicTHREE.addElement(textGeo, textMaterial, 30, -5, 0, 0);
     textGeo.computeBoundingBox();
     texto.position.y += 5;
     texto.position.x = 30;
@@ -154,7 +153,7 @@ loader.load( 'js/fonts/helvetiker_bold.typeface.js', function ( font ) {
 
     		//Creo y añado el cubo interaccionable
     		var materialCube = new basicTHREE.shinyMaterial(colorYellow);
-    		basicTHREE.addElement(cube, materialCube, 16, 21, 1, questionPopup);
+    		basicTHREE.addElement(cube, materialCube, 16, 24, 1, questionPopup);
     		    //Configuro la aplicación
     		basicTHREE.setQuestion(question);
     		
