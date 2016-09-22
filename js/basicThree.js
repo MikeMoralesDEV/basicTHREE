@@ -161,20 +161,20 @@ basicTHREE.InitiateScene = function(cameraType, rendererType){
 
 	//Creacion de suelo y cielo
 		// Suelo
-	var texture = new THREE.TextureLoader().load( "js/desert.jpg" );
+	var texture = new THREE.TextureLoader().load( "js/checkerboard.jpg" );
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	texture.repeat.set( 50, 50 );
 
-	groundBasic = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture } );
-	groundBasic.color.setHSL( 0.1, 0.9, 0.7 );
+	groundBasic = new THREE.MeshBasicMaterial( { map: texture } );
+	//groundBasic.color.setHSL(0.1, 0.9, 0.7 );
 
-	ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 50000, 50000 ), groundBasic );
+	ground = new THREE.Mesh( new THREE.PlaneBufferGeometry( 256, 256 ), groundBasic );
 	ground.position.y = - 215;
 	ground.rotation.x = - Math.PI / 2;
 	scene.add( ground );
 
-	ground.castShadow = false;
-	ground.receiveShadow = true;
+	//ground.castShadow = false;
+	//ground.receiveShadow = true;
 
 
 	basicTHREE.camera=camera;
@@ -331,7 +331,6 @@ basicTHREE.createCameraControls = function(){
 
 	var controls = new THREE.OrbitControls(basicTHREE.camera, basicTHREE.renderer.domElement);
 	controls.enableKeys = false; 
-
 	return controls;
 
 };
@@ -343,6 +342,7 @@ basicTHREE.avatarLive = function(MovingMesh, cond=1, glob=0, rotate=0, reset=1){
 	if(basicTHREE.resetPos==undefined){
 		basicTHREE.Avatar = MovingMesh; 
 		basicTHREE.Avatar.add(basicTHREE.camera);
+		basicTHREE.camera.position.y =  2*Math.sin( -80 );  
 		basicTHREE.resetPos=[MovingMesh.position.x, MovingMesh.position.y, MovingMesh.position.z]; //estos no varian para el reset.
 		basicTHREE.resetRot=[MovingMesh.rotation.x, MovingMesh.rotation.y, MovingMesh.rotation.z];
 	}
@@ -372,6 +372,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 		delta = firstDelta;
 
 	}
+	var colType = "ACT";
 	var originPoint = basicTHREE.Avatar.position.clone(); //este valor varia, para la colisión
 	for (var vertexIndex = 0; vertexIndex < basicTHREE.Avatar.geometry.vertices.length; vertexIndex++)
 	{		
@@ -400,8 +401,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 						console.log(basicTHREE.testCount);
 
 					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
-
-						stop=1;
+						colType = "WALL";
 
 					}
 
@@ -414,34 +414,28 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 
             	//Movimiento condicionado
                 case KEYUP:
-
                 	if(cond==1 && stop)
-                    	MovingMesh.translateZ( -moveDistance*50 );
-                	
-
+                    		MovingMesh.translateZ( -moveDistance*50 );
                     break;
                     
                 case KEYDOWN:
                    	if(cond==1 && stop)
-	                    MovingMesh.translateZ( moveDistance*50 );
+	                	MovingMesh.translateZ( moveDistance*50 );
                     break;
                     
                 case KEYLEFT:
-
                    	if(cond==1 && stop) {
-
-       					MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
-                    	MovingMesh.translateZ( -moveDistance*50 );
- 					}
+       				MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
+                    		MovingMesh.translateZ( -moveDistance*50 );
+ 			}
                     break;
                     
                 case KEYRIGHT:
-
-                    if(cond==1 && stop){
-                        MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);
-	                    MovingMesh.translateZ( -moveDistance*50 );
-                    }
-                    break;
+        		if(cond==1 && stop){
+                		MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);
+	        		MovingMesh.translateZ( -moveDistance*50 );
+                    	}
+                   break;
                     
                     //Movimiento global
                 case KEYW:
@@ -451,54 +445,54 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
                     
                 case KEYS:
                 	if(glob==1 && stop)                  
-                    	MovingMesh.translateZ( moveDistance );
+                    		MovingMesh.translateZ( moveDistance );
 
                     break;
                     
                 case KEYA:
                 	if(glob==1 && stop)              
-                    	MovingMesh.translateX( -moveDistance );
+                    		MovingMesh.translateX( -moveDistance );
                     break;
                     
                 case KEYD:
                 	if(glob==1 && stop)                
-                    	MovingMesh.translateX( moveDistance );
+                    		MovingMesh.translateX( moveDistance );
                     break;
 
 					//Giros
                 case KEYQ:
                 	if(rotate==1 && stop)               
-						MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
-		            break;
+				MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), 0.05);
+		        break;
                     
                 case KEYE:
                 	if(rotate==1 && stop)
-						MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);                    
-					break;
+				MovingMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -0.05);                    
+			break;
 
-				case KEYF:
-					if(rotate==1 && stop)
-						MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), 0.05);
-					break;
+		case KEYF:
+			if(rotate==1 && stop)
+				MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), 0.05);
+			break;
 
-				case KEYZ:
-					if(rotate==1 && stop)
-						MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), -0.05);
-					break;
+		case KEYZ:
+			if(rotate==1 && stop)
+				MovingMesh.rotateOnAxis( new THREE.Vector3(1,0,0), -0.05);
+			break;
 
-					//Reinicio
- 				case KEYX:
- 					if(reset==1){
-	 					MovingMesh.position.x = basicTHREE.resetPos[0];
- 						MovingMesh.position.y = basicTHREE.resetPos[1];
- 						MovingMesh.position.z = basicTHREE.resetPos[2];
- 						MovingMesh.rotation.x = basicTHREE.resetRot[0];
- 						MovingMesh.rotation.y = basicTHREE.resetRot[1];
- 						MovingMesh.rotation.z = basicTHREE.resetRot[2];
- 					}
-					break;                   
+		//Reinicio
+ 		case KEYX:
+ 		if(reset==1){
+			MovingMesh.position.x = basicTHREE.resetPos[0];
+ 			MovingMesh.position.y = basicTHREE.resetPos[1];
+ 			MovingMesh.position.z = basicTHREE.resetPos[2];
+			MovingMesh.rotation.x = basicTHREE.resetRot[0];
+ 			MovingMesh.rotation.y = basicTHREE.resetRot[1];
+			MovingMesh.rotation.z = basicTHREE.resetRot[2];
+ 		}
+		break;                   
             }
-	
+	if(colType == "WALL") stop=1;
 	basicTHREE.testCount++;
 
 };
