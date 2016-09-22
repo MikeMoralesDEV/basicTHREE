@@ -63,6 +63,7 @@ basicTHREE.arrayCollidables=[];
 var stop = 1;
 basicTHREE.testCount = 0;
 var onlyCollidables = 0;
+var wait = 1;
 
 //ELEARNING GLOBAL VARIABLES - MODULE 4
 basicTHREE.arrayFunctions= new Array();
@@ -385,20 +386,20 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 			//0.8 es la distancia que considero "de seguridad", para evitar que se atasque el elemento en otro. 
 			if ( collisionResults.length > 0 && collisionResults[0].distance-1 < directionVector.length() ){ 
 				stop = 0;
+				wait=0;
 				for( var i = 0; i < basicTHREE.arrayCollidables.length; i++){
 
-					if(key==KEYUP && !stop) MovingMesh.translateZ( moveDistance*10 );
-					else if(key==KEYDOWN && !stop) MovingMesh.translateZ( -moveDistance*10 );
-					else if(key==KEYLEFT && !stop) MovingMesh.translateX( moveDistance*10);
-					else if(key==KEYRIGHT && !stop) MovingMesh.translateX( -moveDistance*10 );
-					else if(key==KEYW && !stop) MovingMesh.translateZ( moveDistance );
-					else if(key==KEYS && !stop) MovingMesh.translateZ( -moveDistance );
-					else if(key==KEYA && !stop) MovingMesh.translateX( moveDistance );
-					else if(key==KEYD && !stop) MovingMesh.translateX( -moveDistance );
+					if(key==KEYUP && !wait) MovingMesh.translateZ( moveDistance*10 );
+					else if(key==KEYDOWN && !wait) MovingMesh.translateZ( -moveDistance*10 );
+					else if(key==KEYLEFT && !wait) MovingMesh.translateX( moveDistance*10);
+					else if(key==KEYRIGHT && !wait) MovingMesh.translateX( -moveDistance*10 );
+					else if(key==KEYW && !wait) MovingMesh.translateZ( moveDistance );
+					else if(key==KEYS && !wait) MovingMesh.translateZ( -moveDistance );
+					else if(key==KEYA && !wait) MovingMesh.translateX( moveDistance );
+					else if(key==KEYD && !wait) MovingMesh.translateX( -moveDistance );
 					if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]!=0 ){ // Es objeto e-Learning
 						basicTHREE.arrayFunctions[i](i);
 						basicTHREE.testCount++;
-						console.log(basicTHREE.testCount);
 
 					}else if(collisionResults[0].object==basicTHREE.arrayCollidables[i] && basicTHREE.arrayFunctions[i]==0 ){ //Es solo una pared
 						colType = "WALL";
@@ -406,7 +407,7 @@ basicTHREE.testCollidable = function(key, MovingMesh, cond, glob, rotate, reset)
 					}
 
 				}
-			}
+			}else{wait=1;}
 	}
 
 		 switch( key )
